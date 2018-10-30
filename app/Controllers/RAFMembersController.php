@@ -102,21 +102,17 @@ class RAFMembersController
 		$this->model->updateMemberData($memberID, $toUpdateData);
 	}
 
-	public function applyMemberDiscount()
+	public function getMemberDiscount()
 	{
-		$kk = $this->getAvailableDiscounts(1);
+		$sumDiscount = null;
+		$availableDiscounts = $this->getAvailableDiscounts(1);
 
-		if ($kk > 0) {
-			foreach ($kk as $amount => $ll) {
+		if ($availableDiscounts > 0) {
+			foreach ($availableDiscounts as $amount => $discount) {
 				$sumDiscount += $amount;
 			}
-
-			echo "<pre>";
-			echo 'asdsa';
-			print_r($sumDiscount);
-			echo "</pre>";
-
-			RAFCartController::applyDiscount($sumDiscount);
 		}
+
+		return $sumDiscount;
 	}
 }

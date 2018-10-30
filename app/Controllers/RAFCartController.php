@@ -9,33 +9,21 @@ class RAFCartController
 {
 	public function __construct()
 	{
-		add_action('woocommerce_cart_calculate_fees', [__CLASS__, 'yesDisc']);
+		add_action('woocommerce_cart_calculate_fees', [$this, 'applyDiscount']);
 		add_action('woocommerce_order_status_completed', [$this, 'getOrder']);
 	}
 
-	public function yesDisc()
+	public function applyDiscount()
 	{
+		$membersModel = new RAFMembersModel;
+		$membersController = new RAFMembersController($membersModel);
+		$discountAmount = $membersController->getMemberDiscount();
 		
-		if (isset($_SESSION['raf']->memberAffID)) :
-			$dicountPercentage = 5;
-			
-			$discount = (WC()->cart->subtotal * $dicountPercentage) / 100;
-			WC()->cart->add_fee("You got your {$dicountPercentage}% discount!", -$discount);
-			
-		else:
-			$discount = (WC()->cart->subtotal * $discountAmount) / 100;
-			WC()->cart->add_fee("You got your {$discountAmount}% discount!", -$discount);
-		endif;
-	}
-
-	// public function applyDiscount()
-	public static function applyDiscount($discountAmount = null)
-	{
 		if ($discountAmount !== null) {
-			self::yesDisc($discountAmount);
 
 			$discount = (WC()->cart->subtotal * $discountAmount) / 100;
-			WC()->cart->add_fee("You got your {$discountAmount}% discount!", -$discount);
+			WC()->cart->add_fee("You got your " . $discountAmount . "% discount!", -$discount);
+
 		} else {
 
 			if (isset($_SESSION['raf']->memberAffID)) :
