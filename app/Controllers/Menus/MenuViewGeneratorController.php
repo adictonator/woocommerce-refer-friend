@@ -64,7 +64,7 @@ class MenuViewGeneratorController
     {
         $rand = uniqid();
         if ($assetType == 'css') :
-            wp_enqueue_script('yc-' .$rand, $assetPath);
+            wp_enqueue_style('yc-' .$rand, $assetPath);
         elseif ($assetType == 'js') :
             wp_enqueue_script('yc-' . $rand, $assetPath, null, false, true);
         endif;

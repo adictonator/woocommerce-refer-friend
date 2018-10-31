@@ -29,24 +29,59 @@ class RAFSettingsController implements RAFControllerInterface
 
 	public function updateSettingsData()
 	{
-		$products = $data['rafProducts'];
-		$tableData = (object)  [
-			'products' => (object) $products,
-			'templatePageIDs' => (object) [],
+		$products = $_POST['rafProducts'];	
+		$templatePageIDs = $this->prepareTemplatesPageData($_POST);
+		$discounts = $this->prepareDiscountData($_POST);
+		
+		$toUpdateData = [
+			'products' => serialize($products),
+			'templatePageIDs' => serialize($templatePageIDs),
+			'discounts' => serialize($discounts),
 		];
 
+		$settingsModel = new RAFSettingsModel();
+		$settingsModel->processSettingsData($toUpdateData);
+	}
+
+	public function prepareTemplatesPageData($data)
+	{
 		$templatePageIDs = $data['rafTemplateIDs'];
 
+		$templatePageData = [];
 		foreach ($templatePageIDs as $templateName => $templatePageID) :
-			$tableData->templatePageIDs = (object) [
-				$templatePageID => (object) [
-					'name' => $templateName,
-					'directory' => $templateName,
-				]
+			$templatePageData[$templatePageID] = [
+				'name' => $templateName,
+				'directory' => $templateName,
 			];
 		endforeach;
 
-		$settingsModel = new RAFSettingsModel();
-		$settingsModel->update($tableData);
+		return $templatePageData;
+	}
+
+	protected function prepareDiscountData($data)
+	{
+		$totalReferals = $data['totalReferal'];
+		$totalReferalsCount = count($data['totalReferal']);
+		$discountAmounts = $data['discountAmount'];
+		$freeProds = $data['freeProd'];
+
+		$discounts = [];
+		for ($i = 0; $i < $totalReferalsCount; $i++) {
+			if (!empty($discountAmounts[$i])) :
+				
+				$discounts[$totalReferals[$i]] = [
+					'discount' => $discountAmounts[$i],
+				];
+
+			elseif (!empty($freeProds[$i])) :
+				
+				$discounts[$totalReferals[$i]] = [
+					"freeProd-{$freeProds[$i]}" => $freeProds[$i],
+				];
+
+			endif;
+		}
+
+		return $discounts;
 	}
 }

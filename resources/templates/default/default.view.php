@@ -1,9 +1,4 @@
-<?php get_header(); 
-global $rafMember;
-echo "<pre>";
-print_r($rafMember);
-echo "</pre>";
-?>
+<?php get_header(); ?>
 
 <div class="raf-wrapper">
 	<h2><?php echo HelperPlug::PLUGIN_LONG_NAME; ?> Portal</h2>

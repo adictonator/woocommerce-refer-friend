@@ -67,7 +67,7 @@ class RAFReferController implements RAFControllerInterface
 		$emailHeaders .= "MIME-Version: 1.0\r\n";
 		$emailHeaders .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
 
-		$link = get_permalink(woocommerce_get_page_id('shop')) . '?add-to-cart=5&raf-mem=' . $rafMember->memberAffID;
+		$link = get_permalink(wc_get_page_id('shop')) . '?add-to-cart=5&raf-mem=' . $rafMember->memberAffID;
 
 		$mss = 'Hello, whatever. <a href="' . $link . '">Clik here</a>. bye';
 

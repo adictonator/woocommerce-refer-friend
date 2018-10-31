@@ -1,0 +1,23 @@
+.wc-raf-table__inner tr th {
+	width: 200px;
+	line-height: 2em;
+	font-weight: 600;
+}
+.wc-raf-table__inner tr td {
+	padding: 20px 0;
+}
+
+.wp-raf-input {
+	width: 400px;
+}
+.wp-raf-input--small {
+	width: 100px;
+}
+
+ul[data-raf-disc-wrap] li div {
+	margin: 20px 0;
+}
+ul[data-raf-disc-wrap] span {
+	display: inline-block;
+	width: 150px;
+}

@@ -2,6 +2,7 @@
 namespace RAF\Controllers\Menus;
 
 use HelperPlug;
+use RAF\Models\RAFSettingsModel;
 
 defined('ABSPATH') or die('Not permitted!');
 
@@ -11,14 +12,21 @@ defined('ABSPATH') or die('Not permitted!');
 class RAFSettingsMenuController implements MenuInterface
 {
     public $title = 'Settings';
-    public $slug = HelperPlug::PLUGIN_SLUG . '-settings';
+	public $slug = HelperPlug::PLUGIN_SLUG . '-settings';
+	public $model;
 
     protected $cssAssets = [
+		'app.css'
     ];
 
     protected $jsAssets = [
-       // 'app.js'
-    ];
+       'app.js'
+	];
+	
+	public function __construct()
+	{
+		$this->model = new RAFSettingsModel;
+	}
 
     public function menu()
     {

@@ -1,6 +1,8 @@
 <?php
 namespace RAF\Controllers;
 
+use RAF\Models\RAFSettingsModel;
+
 defined('ABSPATH') or die('Not permitted!');
 
 /**
@@ -21,7 +23,7 @@ class TemplateViewController
 	public function getTemplatePage()
 	{
 		$templatePageData = get_option('rafSettingsData');
-		$templatePageIDs = $templatePageData->templatePageIDs;
+		$templatePageIDs = (new RAFSettingsModel)->getTemplatesData();
 
 		$this->pageIDs = $templatePageIDs;
 	}
@@ -30,11 +32,11 @@ class TemplateViewController
 	{
 		global $post;
 
-		if (property_exists($this->pageIDs, $post->ID)) {
-			$templateData = $this->pageIDs->{$post->ID};
+		if (array_key_exists($post->ID, $this->pageIDs)) {
+			$templateData = $this->pageIDs[$post->ID];
 
-			$this->templateName = isset($templateData->name) ? $templateData->name : $this->templatename;
-			$this->templateDirectory = isset($templateData->directory) ? $templateData->directory : $this->templateDirectory;
+			$this->templateName = isset($templateData['name']) ? $templateData['name'] : $this->templatename;
+			$this->templateDirectory = isset($templateData['directory']) ? $templateData['directory'] : $this->templateDirectory;
 
 			$template = FrontEndViewGeneratorController::setView($this->templateDirectory, $this->templateName);
 		}

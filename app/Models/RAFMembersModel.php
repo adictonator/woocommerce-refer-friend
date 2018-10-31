@@ -6,24 +6,26 @@ defined('ABSPATH') or die('Not permitted!');
 class RAFMembersModel 
 {
 	private $dbDriver = null;
+	private $table;
 
 	public function __construct()
 	{
 		global $wpdb;
 
-		$this->dbDriver = $wpdb;	
+		$this->dbDriver = $wpdb;
+		$this->table = $this->dbDriver->prefix . 'raf_members';
 	}
 
 	public function getAllMembers()
 	{
 		return $this->dbDriver->get_results(
-			"SELECT * FROM {$this->dbDriver->prefix}raf_members"
+		"SELECT * FROM {$this->table}"
 		);
 	}
 
 	public function createMember(array $memberData)
 	{
-		$this->dbDriver->insert("{$this->dbDriver->prefix}raf_members",
+		$this->dbDriver->insert($this->table,
 			$memberData
 		);
 
@@ -34,7 +36,7 @@ class RAFMembersModel
 	{
 		try {
 			return $this->dbDriver->get_row(
-				"SELECT * FROM {$this->dbDriver->prefix}raf_members WHERE {$column}='{$value}' LIMIT 1"
+				"SELECT * FROM {$this->table} WHERE {$column}='{$value}' LIMIT 1"
 			);
 		} catch (\Exception $e) {
 			throw $e->getMessage();
@@ -44,7 +46,7 @@ class RAFMembersModel
 	public function updateMemberData(int $memberID, array $toUpdateData)
 	{
 		if (null !== $this->getMemberDataBy($memberID)) {
-			$result = $this->dbDriver->update("{$this->dbDriver->prefix}raf_members",
+			$result = $this->dbDriver->update($this->table,
 				$toUpdateData,
 				['memberID' => $memberID]
 			);

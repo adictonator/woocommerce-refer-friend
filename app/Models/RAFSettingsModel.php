@@ -11,28 +11,66 @@ defined('ABSPATH') or die('Not permitted!');
  */
 class RAFSettingsModel
 {
-	private $tableName = 'raf_settings';
+	private $dbDriver = null;
+	private $table;
 
 	public function __construct()
 	{
 		global $wpdb;
 
 		$this->dbDriver = $wpdb;
+		$this->table = $this->dbDriver->prefix . 'raf_settings';
 	}
 
-	public function update($data)
+	public function processSettingsData($settingsData)
 	{
-		update_option('rafSettingsData', $data);
-		// if (!empty($data)) :
-		// 	$this->dbDriver->query(
-		// 		$this->dbDriver->prepare(
-		// 			"INSERT INTO {$this->dbDriver->prefix}{$this->tableName}
-		// 			(templatePage)
-		// 			VALUES ( %d )
-		// 			",
-		// 			8900
-		// 		)
-		// 	);
-		// endif;
+		if (!$this->getSettingsData()) :
+			$this->insertSettingsData($settingsData);
+		else:
+			$this->updateSettingsData($settingsData);
+		endif;
+	}
+
+	protected function insertSettingsData($settingsData)
+	{
+		$this->dbDriver->insert($this->table, $settingsData);
+	}
+	
+	protected function updateSettingsData($settingsData)
+	{
+		$hasData = $this->getSettingsData();
+		
+		if (null !== $hasData) :
+			$this->dbDriver->update($this->table,
+				$settingsData,
+				['id' => $hasData->id]
+			);
+		endif;
+	}
+
+	public function getSettingsData()
+	{
+		return $this->dbDriver->get_row("SELECT * FROM {$this->table}");
+	}
+
+	public function getTemplatesData()
+	{
+		$settingsData = $this->getSettingsData();
+
+		return unserialize($settingsData->templatePageIDs);
+	}
+
+	public function getProductsData()
+	{
+		$settingsData = $this->getSettingsData();
+
+		return unserialize($settingsData->products);
+	}
+	
+	public function getDiscountsData()
+	{
+		$settingsData = $this->getSettingsData();
+
+		return unserialize($settingsData->discounts);
 	}
 }
