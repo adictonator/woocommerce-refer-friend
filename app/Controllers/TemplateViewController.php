@@ -16,16 +16,9 @@ class TemplateViewController
 
 	public function __construct()
 	{
-		$this->getTemplatePage();
+		$this->pageIDs = RAFSettingsModel::init()->getTemplatesData();	
+
 		add_filter('page_template', [$this, 'setTemplatePage']);	
-	}
-
-	public function getTemplatePage()
-	{
-		$templatePageData = get_option('rafSettingsData');
-		$templatePageIDs = (new RAFSettingsModel)->getTemplatesData();
-
-		$this->pageIDs = $templatePageIDs;
 	}
 
 	public function setTemplatePage($template)

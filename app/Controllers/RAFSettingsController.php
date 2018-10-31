@@ -39,8 +39,7 @@ class RAFSettingsController implements RAFControllerInterface
 			'discounts' => serialize($discounts),
 		];
 
-		$settingsModel = new RAFSettingsModel();
-		$settingsModel->processSettingsData($toUpdateData);
+		RAFSettingsModel::processSettingsData($toUpdateData);
 	}
 
 	public function prepareTemplatesPageData($data)

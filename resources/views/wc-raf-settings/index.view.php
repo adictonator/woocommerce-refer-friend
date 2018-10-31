@@ -1,18 +1,26 @@
 <?php
 
+use RAF\Models\RAFSettingsModel;
+
 defined('ABSPATH') or die('Not permitted!');
 
-$model = self::$menuInstance->model;
-
-$selectedPages = $model->getTemplatesData();
-$selectedProducts = $model->getProductsData();
-$discounts = $model->getDiscountsData();
+$selectedPages = RAFSettingsModel::getTemplatesData();
+$selectedProducts = RAFSettingsModel::getProductsData();
+$discounts = RAFSettingsModel::getDiscountsData();
 
 ?>
 
 <div class="wrap">
 	<h2><?php echo self::$menuInstance->title; ?></h2>
 	<hr />
+
+	<?php if (isset($_SESSION['raf']->adminFlash)) : ?>
+		<div class="notice notice-<?php echo $_SESSION['raf']->adminFlash->type; ?> is-dismissible">
+			<p><?php echo $_SESSION['raf']->adminFlash->msg; ?></p>
+		</div>
+	<?php 
+		unset($_SESSION['raf']->adminFlash);
+	endif; ?>
 
 	<form action="<?php echo admin_url('admin-post.php?action=listen'); ?>" method="POST">
 		<input type="hidden" name="controller" value="settings">

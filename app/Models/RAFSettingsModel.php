@@ -11,66 +11,86 @@ defined('ABSPATH') or die('Not permitted!');
  */
 class RAFSettingsModel
 {
-	private $dbDriver = null;
-	private $table;
+	private static $dbDriver = null;
+	private static $table;
 
 	public function __construct()
 	{
 		global $wpdb;
 
-		$this->dbDriver = $wpdb;
-		$this->table = $this->dbDriver->prefix . 'raf_settings';
+		self::$dbDriver = $wpdb;
+		self::$table = self::$dbDriver->prefix . 'raf_settings';
 	}
 
-	public function processSettingsData($settingsData)
+	public static function init()
 	{
-		if (!$this->getSettingsData()) :
-			$this->insertSettingsData($settingsData);
+		return new RAFSettingsModel;
+	}
+
+	public static function processSettingsData($settingsData)
+	{
+		if (!self::getSettingsData()) :
+			self::insertSettingsData($settingsData);
 		else:
-			$this->updateSettingsData($settingsData);
+			self::updateSettingsData($settingsData);
 		endif;
+
+		if (self::$dbDriver->last_error) :
+			$_SESSION['raf']->adminFlash = (object) [
+				'type' => 'error',
+				'msg' => 'Error: ' . self::$dbDriver->last_error,
+			];
+		else:
+			$_SESSION['raf']->adminFlash = (object) [
+				'type' => 'success',
+				'msg' => 'Settings updated successfully!',
+			];
+		endif;
+
+		wp_redirect(wp_get_referer());
+		exit;
 	}
 
 	protected function insertSettingsData($settingsData)
 	{
-		$this->dbDriver->insert($this->table, $settingsData);
+		self::$dbDriver->insert(self::$table, $settingsData);
 	}
 	
-	protected function updateSettingsData($settingsData)
+	protected static function updateSettingsData($settingsData)
 	{
-		$hasData = $this->getSettingsData();
+		$hasData = self::getSettingsData();
 		
 		if (null !== $hasData) :
-			$this->dbDriver->update($this->table,
+			self::$dbDriver->update(self::$table,
 				$settingsData,
 				['id' => $hasData->id]
 			);
 		endif;
 	}
 
-	public function getSettingsData()
+	public static function getSettingsData()
 	{
-		return $this->dbDriver->get_row("SELECT * FROM {$this->table}");
+		return self::$dbDriver->get_row("SELECT * FROM ". self::$table);
 	}
 
-	public function getTemplatesData()
+	public static function getTemplatesData()
 	{
-		$settingsData = $this->getSettingsData();
+		$settingsData = self::getSettingsData();
 
-		return unserialize($settingsData->templatePageIDs);
+		return isset($settingsData->templatePageIDs) ? unserialize($settingsData->templatePageIDs) : [];
 	}
 
-	public function getProductsData()
+	public static function getProductsData()
 	{
-		$settingsData = $this->getSettingsData();
+		$settingsData = self::getSettingsData();
 
-		return unserialize($settingsData->products);
+		return isset($settingsData->products) ? unserialize($settingsData->products) : [];
 	}
 	
-	public function getDiscountsData()
+	public static function getDiscountsData()
 	{
-		$settingsData = $this->getSettingsData();
+		$settingsData = self::getSettingsData();
 
-		return unserialize($settingsData->discounts);
+		return isset($settingsData->discounts) ? unserialize($settingsData->discounts) : [];
 	}
 }

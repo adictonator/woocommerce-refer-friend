@@ -1,4 +1,8 @@
-<?php get_header(); ?>
+<?php
+
+use RAF\Models\RAFSettingsModel;
+
+get_header(); ?>
 
 <div class="raf-wrapper">
 	<h2><?php echo HelperPlug::PLUGIN_LONG_NAME; ?> Portal</h2>
@@ -9,8 +13,8 @@
 		<input type="hidden" name="rafAction" value="referProduct">
 		<ul>
 		<?php
-		$rafSettingsData = get_option('rafSettingsData');
-		$products = $rafSettingsData->products;
+
+		$products = RAFSettingsModel::getProductsData();
 
 		foreach ($products as $product) :
 			$getProduct = wc_get_product($product);
