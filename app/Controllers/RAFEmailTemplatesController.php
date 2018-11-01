@@ -1,12 +1,11 @@
 <?php
 namespace RAF\Controllers;
 
+use RAF\Models\RAFEmailTemplatesModel;
+
 defined('ABSPATH') or die('Not permitted!');
 
-/**
- * NEED REWORKING -- not sure if its a best approach
- */
-class RAFSettingsController implements RAFControllerInterface
+class RAFEmailTemplatesController implements RAFControllerInterface
 {
 	public function __construct(array $data)
 	{
@@ -25,10 +24,35 @@ class RAFSettingsController implements RAFControllerInterface
 		endif;
 	}
 
-	public function updateTemplate()
+	public function processTemplateData()
 	{
-		echo "<pre>";
-		print_r($_POST);
-		echo "</pre>";
+		$emailTemplate = RAFEmailTemplatesModel::init()->getEmailTemplateData($_POST['emailTemplateID']);
+		
+		$toUpdateData = [
+			'templateID' => esc_html($_POST['emailTemplateID']),
+			'subject' => esc_html($_POST['subject']),
+			'content' => esc_html($_POST['content']),
+		];
+
+		if (null !== $emailTemplate) :
+			RAFEmailTemplatesModel::updateEmailTemplate($toUpdateData);
+		else:
+			RAFEmailTemplatesModel::createEmailTemplate($toUpdateData);
+		endif;
+
+		// if (self::$dbDriver->last_error) :
+		// 	$_SESSION['raf']->adminFlash = (object) [
+		// 		'type' => 'error',
+		// 		'msg' => 'Error: ' . self::$dbDriver->last_error,
+		// 	];
+		// else:
+		// endif;
+				$_SESSION['raf']->adminFlash = (object) [
+					'type' => 'success',
+					'msg' => 'Templates updated successfully!',
+				];
+
+		wp_redirect(wp_get_referer());
+		exit;
 	}
 }

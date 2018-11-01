@@ -71,13 +71,7 @@ class RAFReferController implements RAFControllerInterface
 
 		$mss = 'Hello, whatever. <a href="' . $link . '">Clik here</a>. bye';
 
-		try {
-			return wp_mail($emailData->to, 'A test here', $mss, $emailHeaders);
-		} catch (\Exception $e) {
-			echo "<pre>";
-			print_r($e->getNessage());
-			echo "</pre>";
-		}
+		wp_mail($emailData->to, 'A test here', $mss, $emailHeaders);
 	}
 
 	public static function checkRAFAffURL()

@@ -19,6 +19,7 @@ class TemplateViewController
 		$this->pageIDs = RAFSettingsModel::init()->getTemplatesData();	
 
 		add_filter('page_template', [$this, 'setTemplatePage']);	
+		add_filter('display_post_states', [$this, 'setTemplatePageState'], 10, 2);	
 	}
 
 	public function setTemplatePage($template)
@@ -35,5 +36,14 @@ class TemplateViewController
 		}
 
 		return $template;
+	}
+
+	public function setTemplatePageState($postState, $post)
+	{
+		if (array_key_exists($post->ID, $this->pageIDs)) :
+			$postState['wc_page_for_raf'] = __('Refer a Friend Page');
+		endif;
+
+		return $postState;
 	}
 }

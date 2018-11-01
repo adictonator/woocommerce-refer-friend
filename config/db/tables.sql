@@ -44,6 +44,7 @@ CREATE TABLE IF NOT EXISTS `###raf_refered_users`
 CREATE TABLE IF NOT EXISTS `###raf_email_templates`
 (
 	`id` INT(10) NOT NULL AUTO_INCREMENT,
+	`templateID` VARCHAR(191) NOT NULL UNIQUE,
 	`subject` LONGTEXT NULL,
 	`content` LONGTEXT NULL,
 	`createdAt` DATETIME DEFAULT CURRENT_TIMESTAMP,

@@ -15,9 +15,10 @@ class RAFRoutesController
 	public function __construct()
 	{
 		$this->controllers = [
+			'RAFReferController' => RAFReferController::class,
 			'RAFSettingsController' => RAFSettingsController::class,
 			'RAFTemplatesController' => RAFTemplatesController::class,
-			'RAFReferController' => RAFReferController::class,
+			'RAFEmailTemplatesController' => RAFEmailTemplatesController::class,
 		];
 	}
 

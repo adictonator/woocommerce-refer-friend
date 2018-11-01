@@ -1,3 +1,300 @@
-body {
-	color: aquamarine;
+/* =================================
+  banner-section
+==================================== */
+.banner-sec {
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+}
+
+.banner-sec .banner-left {
+	display: flex;
+	flex-direction: column;
+	flex-basis: 0;
+	flex-grow: 1;
+	background: url(../images/curalife-pic.jpg) no-repeat;
+	background-size: cover;
+	text-align: center;
+}
+
+.banner-sec .banner-left span:first-of-type {
+	position: relative;
+	top: 4em;
+	left: -15px;
+	font-size: 65px;
+	line-height: 80px;
+	font-family: 'Lato', sans-serif;
+	font-weight: 600;
+	color: #fff;
+	text-transform: uppercase;
+}
+.banner-sec .banner-left span:nth-of-type(2) {
+	position: relative;
+	top: 4.5em;
+	font-size: 65px;
+	line-height: 85px;
+	font-family: 'Lato', sans-serif;
+	font-weight: 600;
+	color: #fff;
+	text-transform: uppercase;
+	margin-top: 30px;
+}
+
+.banner-sec .banner-right {
+	background: #f2f2f2;
+	padding: 40px 40px 0;
+	flex-basis: 0;
+	flex-grow: 1;
+}
+.banner-sec .banner-right h2 {
+	font-size: 35px;
+	line-height: 45px;
+	font-family: 'Lato', sans-serif;
+	font-weight: 700;
+	color: #042c4b;
+}
+
+.banner-sec .banner-right h3 {
+	font-size: 35px;
+	line-height: 45px;
+	font-family: 'Lato', sans-serif;
+	font-weight: 700;
+	color: #042c4b;
+	padding-top: 30px;
+}
+.banner-sec .banner-right p {
+	font-size: 20px;
+	line-height: 31px;
+	font-family: 'Lato', sans-serif;
+	font-weight: 400;
+	color: #000;
+	padding-top: 21px;
+	max-width: 650px;
+}
+
+.banner-sec .social-icon {
+	width: 100%;
+	padding: 30px 0;
+}
+.banner-sec .social-icon ul {
+	padding: 0;
+	margin: 0;
+}
+.banner-sec .social-icon li {
+	display: inline-block;
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+	text-align: center;
+	padding: 9px 0;
+	margin: 0 5px;
+}
+.banner-sec .email {
+	background: #3cbab3;
+}
+.banner-sec .facebook {
+	background: #4867aa;
+}
+.banner-sec .twiiter {
+	background: #00aced;
+}
+
+.banner-sec .social-icon i {
+	color: #fff;
+	font-size: 20px;
+}
+
+.banner-sec .email-field {
+	width: 100%;
+}
+
+.banner-sec .email-field input {
+	width: 100%;
+	max-width: 500px;
+	height: 52px;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	padding: 0 10px;
+	font-size: 16px;
+	line-height: 26px;
+	font-weight: 400;
+	display: block;
+	background: transparent;
+	outline: 0;
+}
+.banner-sec .email-field textarea {
+	margin: 30px 0;
+	width: 100%;
+	max-width: 500px;
+	height: 140px;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	padding: 15px;
+	font-size: 16px;
+	line-height: 26px;
+	font-weight: 400;
+	display: block;
+	background: transparent;
+	outline: 0;
+}
+.banner-sec .email-field button {
+	background: #00aaff;
+	color: #fff;
+	line-height: 17px;
+	padding: 13px 40px;
+	text-transform: capitalize;
+	font-size: 15px;
+	border: none;
+	outline: none;
+}
+
+.banner-sec .share-the-link {
+	width: 100%;
+	padding: 49px 0 30px 0;
+}
+
+.banner-sec .share-the-link aside {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	border: 1px solid #ccc;
+	width: 100%;
+	max-width: 500px;
+	height: 52px;
+	border-radius: 4px;
+	margin: 26px 0;
+}
+
+.banner-sec .share-the-link aside input {
+	width: 70%;
+	height: 45px;
+	border: 0;
+	border-radius: 4px;
+	padding: 0 10px;
+	font-size: 16px;
+	font-weight: 400;
+	display: block;
+	background: transparent;
+	outline: 0;
+}
+
+.banner-sec .share-the-link aside button {
+	background: #2dbe60;
+	color: #fff;
+	line-height: 1;
+	padding: 13px 10px;
+	text-transform: capitalize;
+	display: inline-block;
+	width: 150px;
+	text-align: center;
+	margin-right: 5px;
+	border: none;
+	outline: none;
+	font-size: 14px;
+}
+
+.banner-sec .share-the-link h4 {
+	font-size: 18px;
+	line-height: 26px;
+	font-family: 'Lato', sans-serif;
+	font-weight: 400;
+	color: #042c4b;
+}
+/* =================================
+work-sec
+==================================== */
+.work-sec {
+	width: 100%;
+	text-align: center;
+	padding: 30px 0;
+	display: inline-block;
+}
+.work-sec h2 {
+	font-size: 35px;
+	line-height: 45px;
+	font-family: 'Lato', sans-serif;
+	font-weight: 700;
+	color: #042c4b;
+}
+.wrapo {
+	position: relative;
+	margin-bottom: 100px;
+}
+.raf-progress {
+	width: 1300px;
+	position: relative;
+	left: -100px;
+	overflow: hidden;
+	height: 7px;
+	margin-bottom: 20px;
+	background-color: #f5f5f5;
+	border-radius: 4px;
+	box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+.raf-progress-wrapper {
+	position: relative;
+}
+.raf-progress-wrapper:before,
+.raf-progress-wrapper:after {
+	position: absolute;
+	left: -100px;
+	font-weight: bold;
+}
+.raf-progress-wrapper:before {
+	content: attr(data-text-up);
+	top: -40px;
+}
+.raf-progress-wrapper:after {
+	content: attr(data-text-down);
+	top: 20px;
+}
+
+.raf-progress .progress-bar {
+	height: 7px;
+	font-size: 12px;
+	color: #fff;
+	text-align: center;
+	background-color: #3cbab3;
+	box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.15);
+}
+
+.work-sec .count-bar {
+	width: 100%;
+	position: relative;
+	top: 40px;
+}
+.work-sec .count-bar ul {
+	display: flex;
+	justify-content: space-between;
+	list-style-type: none;
+}
+
+.work-sec .count-bar span {
+	width: 25px;
+	height: 25px;
+	border-radius: 50%;
+	background: #fff;
+	display: inline-block;
+	position: relative;
+	border: 2px solid #3cbab3;
+	z-index: 999;
+}
+.work-sec .count-bar span:before {
+	position: relative;
+	top: -40px;
+	left: -1px;
+	right: 0;
+	content: attr(data-text-up);
+	font-size: 16px;
+	line-height: 25px;
+	color: #000;
+	font-weight: 700;
+}
+.work-sec .count-bar span:after {
+	position: absolute;
+	top: 30px;
+	left: -36px;
+	right: 0;
+	content: attr(data-text-down);
+	width: 110px;
 }

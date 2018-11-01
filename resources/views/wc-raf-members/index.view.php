@@ -35,7 +35,7 @@ $controller = self::$menuInstance->controller;
 		
 		else: ?>
 			<tr>
-				<td colspan="3">Nothing found.</td>
+				<td colspan="4">Nothing found.</td>
 			</tr>
 		<?php endif; ?>
 
