@@ -12,28 +12,40 @@
 			<p>For every friend that purchases, we'll give them 5% OFF their first order, and we'll reward you with a 10%
 				discount!</p>
 
+			<?php if (null === $rafMember): ?>
 
-			<div class="social-icon">
-				<ul>
-					<li class="email"><a href="#"><i class="fa fa-envelope-o" aria-hidden="true"></i></a> </li>
-					<li class="facebook"><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a> </li>
-					<li class="twiiter"><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a> </li>
-				</ul>
-			</div>
+				<div class="share-the-link">
+					<p>You need to login first in order to use <?php echo HelperPlug::PLUGIN_LONG_NAME; ?>! <br />
+						<a href="<?php echo get_permalink(wc_get_page_id('myaccount')); ?>">Login to my account</a>
+					</p>
+				</div>
 
-			<div class="email-field">
-				<form id="raf-refer-product-form">
-					<input type="hidden" name="controller" value="templates">
-					<input type="hidden" name="rafAction" value="referProduct">
-					<input type="" name="" placeholder="Enter your friend email">
-					<textarea>CuraLin helped me manage my glucose levels safely, fast and naturally. Here's a 5% discount from me for your first order. Give it try, you won't regret it.</textarea>
-					<button type="button" data-raf-prod-id>Send Email</button>
-				</form>
-			</div>
-			<div class="share-the-link">
-				<h4>or share the link below</h4>
-				<aside> <input type="" name="" placeholder="https://curalife.co/refer-a-friend/#"><button>Copy Link</button></aside>
-			</div>
+			<?php else : ?>
+				<div class="social-icon">
+					<ul>
+						<li class="email"><a href="#"><i class="fa fa-envelope-o" aria-hidden="true"></i></a> </li>
+						<li class="facebook"><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a> </li>
+						<li class="twiiter"><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a> </li>
+					</ul>
+				</div>
+
+				<div class="email-field">
+					<form id="raf-refer-product-form">
+						<input type="hidden" name="controller" value="refer">
+						<input type="hidden" name="rafAction" value="processRefer">
+						<input type="email" name="rafReferEmail" placeholder="Enter your friend email">
+						<textarea name="rafReferMessage">CuraLin helped me manage my glucose levels safely, fast and naturally. Here's a 5% discount from me for your first order. Give it try, you won't regret it.</textarea>
+						<button type="button" data-raf-prod-id>Send Email</button>
+					</form>
+				</div>
+				<div class="share-the-link">
+					<h4>or share the link below</h4>
+					<aside> <span class="link-text" title="<?php echo get_permalink(wc_get_page_id('shop')) . '?raf-mem=' . $rafMember->memberAffID; ?>"><?php echo get_permalink(wc_get_page_id('shop')) . '?raf-mem=' . $rafMember->memberAffID; ?></span><button data-raf-copy-link data-raf-link="<?php echo get_permalink(wc_get_page_id('shop')) . '?raf-mem=' . $rafMember->memberAffID; ?>">Copy Link</button>
+					<span class="raf-tooltip">Link copied!</span>
+					</aside>
+				</div>
+			
+			<?php endif; ?>
 		</div>
 	</section>
 	<!--  Contrary-sec-->
@@ -55,7 +67,7 @@
 						</div>
 						<div class="raf-progress-wrapper" data-text-up="Friends Referrals" data-text-down="CuraLife Rewards">
 							<div class="raf-progress">
-								<div class="progress-bar" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
+								<div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
 							</div>
 						</div>
 					</div>

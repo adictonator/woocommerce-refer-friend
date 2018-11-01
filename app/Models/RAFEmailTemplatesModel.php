@@ -50,6 +50,6 @@ class RAFEmailTemplatesModel
 	{
 		$emailTemplateData = self::getEmailTemplateData($emailTemplateID);
 
-		return isset($emailTemplateData->content) ? $emailTemplateData->content : '';
+		return isset($emailTemplateData->content) ? stripcslashes(html_entity_decode($emailTemplateData->content)) : '';
 	}
 }

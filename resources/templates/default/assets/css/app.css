@@ -154,6 +154,7 @@
 }
 
 .banner-sec .share-the-link aside {
+	position: relative;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
@@ -165,7 +166,8 @@
 	margin: 26px 0;
 }
 
-.banner-sec .share-the-link aside input {
+.banner-sec .share-the-link aside input,
+.banner-sec .share-the-link .link-text {
 	width: 70%;
 	height: 45px;
 	border: 0;
@@ -176,6 +178,11 @@
 	display: block;
 	background: transparent;
 	outline: 0;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+	line-height: 45px;
+	cursor: copy;
 }
 
 .banner-sec .share-the-link aside button {
@@ -191,6 +198,8 @@
 	border: none;
 	outline: none;
 	font-size: 14px;
+	z-index: 30;
+	position: relative;
 }
 
 .banner-sec .share-the-link h4 {
@@ -199,6 +208,24 @@
 	font-family: 'Lato', sans-serif;
 	font-weight: 400;
 	color: #042c4b;
+}
+.banner-sec .share-the-link .raf-tooltip {
+	background: #000;
+	display: inline-block;
+	color: #fff;
+	padding: 10px 15px;
+	transition: 300ms all ease-in-out;
+	top: 5px;
+	position: absolute;
+	overflow: hidden;
+	right: 5px;
+	height: 40px;
+	width: 149px;
+	text-align: center;
+	border-radius: 2px;
+}
+.banner-sec .share-the-link .raf-tooltip--visible {
+	top: 55px;
 }
 /* =================================
 work-sec
@@ -250,6 +277,7 @@ work-sec
 }
 
 .raf-progress .progress-bar {
+	width: 15%;
 	height: 7px;
 	font-size: 12px;
 	color: #fff;
@@ -297,4 +325,175 @@ work-sec
 	right: 0;
 	content: attr(data-text-down);
 	width: 110px;
+}
+
+@media only screen and (max-width: 1400px) {
+	.container {
+		width: 100%;
+	}
+	.raf-progress {
+		width: 1155px;
+		left: 0px;
+	}
+	.raf-progress-wrapper:before,
+	.raf-progress-wrapper:after {
+		left: -40px;
+		font-size: 14px;
+	}
+}
+@media only screen and (max-width: 1200px) {
+	.raf-progress {
+		width: 970px;
+		left: 0px;
+	}
+	.raf-progress .progress-bar {
+		width: 10%;
+	}
+}
+@media only screen and (max-width: 1100px) {
+	.raf-progress {
+		width: 960px;
+	}
+	.raf-progress .progress-bar {
+		width: 10%;
+	}
+	.raf-progress-wrapper:before,
+	.raf-progress-wrapper:after {
+		left: -20px;
+		font-size: 12px;
+	}
+	.work-sec .count-bar span:after {
+		left: -40px;
+		width: 90px;
+		font-size: 14px;
+	}
+	.banner-sec .banner-right h2 {
+		font-size: 30px;
+		line-height: 37px;
+	}
+	.banner-sec .banner-right h3 {
+		font-size: 30px;
+		line-height: 37px;
+	}
+	.banner-sec .banner-left {
+		background-position: 45% 100%;
+	}
+	.banner-sec .banner-left span:nth-of-type(2) {
+		top: 6em;
+		font-size: 55px;
+		line-height: 65px;
+	}
+	.banner-sec .banner-left span:first-of-type {
+		top: 5em;
+		font-size: 55px;
+		line-height: 65px;
+	}
+}
+@media only screen and (max-width: 1024px) {
+	.raf-progress {
+		left: -20px;
+	}
+	.raf-progress-wrapper .progress-bar {
+		width: 13%;
+	}
+}
+@media only screen and (max-width: 992px) {
+	.raf-progress {
+		width: 750px;
+	}
+	.work-sec .count-bar span:after {
+		top: -10px;
+		left: 80px;
+	}
+	.work-sec .count-bar span:before {
+		top: -5px;
+		left: -80px;
+	}
+	.work-sec .count-bar span {
+		margin: 40px 0;
+	}
+	.work-sec .count-bar ul {
+		display: inline;
+		justify-content: inherit;
+		list-style-type: none;
+	}
+	.raf-progress .progress-bar {
+		width: 15%;
+	}
+	.raf-progress-wrapper {
+		position: absolute;
+		width: 100%;
+		transform: rotate(90deg);
+		transform-origin: left;
+		top: 0;
+		left: 49%;
+	}
+	.raf-progress-wrapper:before,
+	.raf-progress-wrapper:after {
+		transform: rotate(270deg);
+	}
+	.raf-progress-wrapper:before {
+		top: 80px;
+	}
+	.raf-progress-wrapper:after {
+		top: -90px;
+	}
+}
+@media only screen and (max-width: 768px) {
+	.banner-sec {
+		display: block;
+	}
+	.banner-sec .banner-left {
+		padding: 25% 0;
+	}
+	.banner-sec .banner-left span:nth-of-type(2) {
+		top: -1.4em;
+		font-size: 55px;
+		line-height: 65px;
+	}
+	.raf-progress-wrapper {
+		left: 48.5%;
+	}
+	.banner-sec .banner-left span:first-of-type {
+		top: -1em;
+		font-size: 55px;
+		line-height: 65px;
+	}
+}
+/* @media only screen and (max-width: 767px) {
+} */
+@media only screen and (max-width: 580px) {
+	.raf-progress-wrapper {
+		left: 48.3%;
+	}
+	.raf-tooltip {
+		width: 145px;
+	}
+}
+@media only screen and (max-width: 480px) {
+	/* .raf-progress-wrapper {
+		bottom: 450px;
+	} */
+	.work-sec h2 {
+		font-size: 30px;
+		line-height: 38px;
+	}
+}
+@media only screen and (max-width: 395px) {
+	.raf-progress-wrapper {
+		left: 47.4%;
+	}
+	.raf-tooltip {
+		width: 124px;
+	}
+}
+@media only screen and (max-width: 375px) {
+	.raf-progress-wrapper {
+		left: 47%;
+	}
+}
+@media only screen and (max-width: 374px) {
+	.raf-tooltip {
+		display: none;
+	}
 }

@@ -52,7 +52,7 @@ $content = RAFEmailTemplatesModel::getContent('email');
 								]
 							];
 
-						wp_editor(stripcslashes(html_entity_decode($content)), 'content', $args); ?>
+						wp_editor($content, 'content', $args); ?>
 					</td>
 				</tr>
 				<tr>

@@ -2,6 +2,7 @@
 namespace RAF\Controllers;
 
 use RAF\Models\RAFMembersModel;
+use RAF\Models\RAFEmailTemplatesModel;
 
 defined('ABSPATH') or die('Not permitted!');
 
@@ -27,9 +28,18 @@ class RAFReferController implements RAFControllerInterface
 	public function processRefer()
 	{
 		global $rafMember;
-		
+
 		$membersModel = new RAFMembersModel;
 		$membersController = new RAFMembersController($membersModel);
+		
+		if (false === RAFUserAuthCheck::check()) {
+			//$returnData = $this->triggerAuth();
+		} else {
+			if (is_null($rafMember) || $rafMember->memberID <= 0) :
+				$rafMember = $membersController->checkStatus();
+			endif;
+		}
+		
 		$referedMembers = $membersController->getReferedUsers($rafMember->memberID);
 
 		if (!in_array($_POST['rafReferEmail'], $referedMembers)) {
@@ -63,20 +73,26 @@ class RAFReferController implements RAFControllerInterface
 	{
 		global $rafMember;
 
-		$emailHeaders = "From: noreply@localhost\r\n";
+		$emailHeaders = "From: noreply@" . $_SERVER['SERVER_NAME'] . "\r\n";
 		$emailHeaders .= "MIME-Version: 1.0\r\n";
 		$emailHeaders .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
+		
+		$link = '<a href="' . get_permalink(wc_get_page_id('shop')) . '?raf-mem=' . $rafMember->memberAffID .'">Click Here to get your discount!</a>';
 
-		$link = get_permalink(wc_get_page_id('shop')) . '?add-to-cart=5&raf-mem=' . $rafMember->memberAffID;
+		RAFEmailTemplatesModel::init();
+		$emailSubject = RAFEmailTemplatesModel::getSubject('email');
+		$emailContent = RAFEmailTemplatesModel::getContent('email');
+		$emailContent = str_replace('%refer_link%', $link, $emailContent);
+		$emailContent = str_replace('%customer_email%', $emailData->to, $emailContent);
+		$emailContent .= "<br /><br />";
+		$emailContent .= $emailData->message;
 
-		$mss = 'Hello, whatever. <a href="' . $link . '">Clik here</a>. bye';
-
-		wp_mail($emailData->to, 'A test here', $mss, $emailHeaders);
+		wp_mail($emailData->to, $emailSubject, $emailContent, $emailHeaders);
 	}
 
 	public static function checkRAFAffURL()
 	{
-		if (isset($_GET['add-to-cart']) && isset($_GET['raf-mem']) && !empty($_GET['raf-mem'])) :
+		if (isset($_GET['raf-mem']) && !empty($_GET['raf-mem'])) :
 
 			$membersModel = new RAFMembersModel;
 			$membersController = new RAFMembersController($membersModel);

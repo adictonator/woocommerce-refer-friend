@@ -2,13 +2,7 @@
 namespace RAF\Models;
 
 defined('ABSPATH') or die('Not permitted!');
-
-/**
- * Not really required for Settings page
- * but keeping it here to maintain the 
- * pattern and symentics.
- * 
- */
+	
 class RAFSettingsModel
 {
 	private static $dbDriver = null;
@@ -77,20 +71,20 @@ class RAFSettingsModel
 	{
 		$settingsData = self::getSettingsData();
 
-		return isset($settingsData->templatePageIDs) ? unserialize($settingsData->templatePageIDs) : [];
+		return !empty($settingsData->templatePageIDs) ? unserialize($settingsData->templatePageIDs) : [];
 	}
 
 	public static function getProductsData()
 	{
 		$settingsData = self::getSettingsData();
 
-		return isset($settingsData->products) ? unserialize($settingsData->products) : [];
+		return !empty($settingsData->products) ? unserialize($settingsData->products) : [];
 	}
 	
 	public static function getDiscountsData()
 	{
 		$settingsData = self::getSettingsData();
 
-		return isset($settingsData->discounts) ? unserialize($settingsData->discounts) : [];
+		return !empty($settingsData->discounts) ? unserialize($settingsData->discounts) : [];
 	}
 }

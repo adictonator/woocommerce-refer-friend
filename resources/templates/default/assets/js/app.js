@@ -27,6 +27,20 @@ jQuery(function($) {
 		doFetch('POST', data)
 		e.preventDefault()
 	})
+
+	/**
+	 * Copy to clipboard
+	 */
+	$('[data-raf-copy-link]').on('click', function() {
+		const range = document.createRange()
+		range.selectNode(document.querySelector('.link-text'))
+		window.getSelection().addRange(range)
+		document.execCommand('copy')
+		$('.raf-tooltip').addClass('raf-tooltip--visible')
+		setTimeout(function() {
+			$('.raf-tooltip').removeClass('raf-tooltip--visible')
+		}, 900)
+	})
 })
 
 async function doFetch(method, data) {
