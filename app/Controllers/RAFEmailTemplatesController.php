@@ -40,17 +40,10 @@ class RAFEmailTemplatesController implements RAFControllerInterface
 			RAFEmailTemplatesModel::createEmailTemplate($toUpdateData);
 		endif;
 
-		// if (self::$dbDriver->last_error) :
-		// 	$_SESSION['raf']->adminFlash = (object) [
-		// 		'type' => 'error',
-		// 		'msg' => 'Error: ' . self::$dbDriver->last_error,
-		// 	];
-		// else:
-		// endif;
-				$_SESSION['raf']->adminFlash = (object) [
-					'type' => 'success',
-					'msg' => 'Templates updated successfully!',
-				];
+		$_SESSION['raf']->adminFlash = (object) [
+			'type' => 'success',
+			'msg' => 'Templates updated successfully!',
+		];
 
 		wp_redirect(wp_get_referer());
 		exit;

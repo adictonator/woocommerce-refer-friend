@@ -34,13 +34,9 @@ class RAFMembersModel
 
 	public function getMemberDataBy($value, $column = 'memberID')
 	{
-		try {
-			return $this->dbDriver->get_row(
-				"SELECT * FROM {$this->table} WHERE {$column}='{$value}' LIMIT 1"
-			);
-		} catch (\Exception $e) {
-			throw $e->getMessage();
-		}
+		return $this->dbDriver->get_row(
+			"SELECT * FROM {$this->table} WHERE {$column}='{$value}' LIMIT 1"
+		);
 	}
 
 	public function updateMemberData(int $memberID, array $toUpdateData)

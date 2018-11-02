@@ -1,4 +1,8 @@
-<?php get_header(); ?>
+<?php 
+
+use RAF\Controllers\RAFUserAuthCheck;
+
+get_header(); ?>
 
 	<section class="banner-sec">
 		<div class="banner-left">
@@ -12,7 +16,7 @@
 			<p>For every friend that purchases, we'll give them 5% OFF their first order, and we'll reward you with a 10%
 				discount!</p>
 
-			<?php if (null === $rafMember): ?>
+			<?php if (false === RAFUserAuthCheck::check()): ?>
 
 				<div class="share-the-link">
 					<p>You need to login first in order to use <?php echo HelperPlug::PLUGIN_LONG_NAME; ?>! <br />
@@ -20,12 +24,24 @@
 					</p>
 				</div>
 
+			<?php elseif (null === $rafMember): ?>
+
+				<div class="share-the-link">
+					<form>
+						<input type="hidden" name="controller" value="templates">
+						<input type="hidden" name="rafAction" value="referProduct">
+						<button class="raf-button--green" data-raf-refer-send>Let's Begin!</button>
+					</form>
+				</div>
+
 			<?php else : ?>
+
 				<div class="social-icon">
 					<ul>
 						<li class="email"><a href="#"><i class="fa fa-envelope-o" aria-hidden="true"></i></a> </li>
-						<li class="facebook"><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a> </li>
-						<li class="twiiter"><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a> </li>
+						<li class="facebook">
+						<a class="raf-social-share" href="https://www.facebook.com/sharer/sharer.php?u=<?php echo get_permalink(wc_get_page_id('shop')) . '?raf-mem=' . $rafMember->memberAffID; ?>" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i></a> </li>
+						<li class="twitter"><a class="raf-social-share" href="https://twitter.com/share?text=<?php echo get_permalink(wc_get_page_id('shop')) . '?raf-mem=' . $rafMember->memberAffID; ?>"><i class="fa fa-twitter" aria-hidden="true"></i></a> </li>
 					</ul>
 				</div>
 
@@ -40,7 +56,7 @@
 				</div>
 				<div class="share-the-link">
 					<h4>or share the link below</h4>
-					<aside> <span class="link-text" title="<?php echo get_permalink(wc_get_page_id('shop')) . '?raf-mem=' . $rafMember->memberAffID; ?>"><?php echo get_permalink(wc_get_page_id('shop')) . '?raf-mem=' . $rafMember->memberAffID; ?></span><button data-raf-copy-link data-raf-link="<?php echo get_permalink(wc_get_page_id('shop')) . '?raf-mem=' . $rafMember->memberAffID; ?>">Copy Link</button>
+					<aside> <span class="link-text" title="<?php echo get_permalink(wc_get_page_id('shop')) . '?raf-mem=' . $rafMember->memberAffID; ?>"><?php echo get_permalink(wc_get_page_id('shop')) . '?raf-mem=' . $rafMember->memberAffID; ?></span><button data-raf-copy-link>Copy Link</button>
 					<span class="raf-tooltip">Link copied!</span>
 					</aside>
 				</div>

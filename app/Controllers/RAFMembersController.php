@@ -1,6 +1,7 @@
 <?php
 namespace RAF\Controllers;
 
+use RAF\Models\RAFSettingsModel;
 use RAF\Models\RAFMembersModel;
 use RAF\Models\RAFReferedUsersModel;
 
@@ -59,21 +60,21 @@ class RAFMembersController
 	{
 		$data = $this->model->getMemberDataBy($memberID);
 
-		return unserialize($data->referedUsers);
+		return !empty($data->referedUsers) ? unserialize($data->referedUsers) : [];
 	}
 	
 	public function getTotalRefered(int $memberID)
 	{
 		$data = $this->model->getMemberDataBy($memberID);
 
-		return unserialize($data->totalRefered);
+		return !empty($data->totalRefered) ? unserialize($data->totalRefered) : [];
 	}
 	
 	public function getTotalDiscounts(int $memberID)
 	{
 		$data = $this->model->getMemberDataBy($memberID);
 
-		return unserialize($data->discounts);
+		return !empty($data->discounts) ? unserialize($data->discounts) : [];
 	}
 	
 	public function getAvailableDiscounts(int $memberID)
@@ -124,17 +125,23 @@ class RAFMembersController
 
 	public function resolveSpecialDiscount($discountType, $availableDiscounts)
 	{
-		if (strpos($discountType, 'freeProd-') !== false) {
+		$discountAmount = null;
 
+		if (strpos($discountType, 'freeProd-') !== false) {
 			if (isset($availableDiscounts[$discountType])) :
-				$this->getSpecialDiscount($discountType);
+				$discountAmount = $this->getSpecialDiscount($discountType, $availableDiscounts);
 			endif;
 		}
+
+		return $discountAmount;
 	}
 
-	public function getSpecialDiscount($discountType)
+	public function getSpecialDiscount($discountType, $availableDiscounts)
 	{
-		
+		$prodID = $availableDiscounts[$discountType]['prodID'];
+		$theProd = wc_get_product($prodID);
+
+	   return ['msg' => $theProd->get_name() . ' is free for you! <a href="?add-to-cart=' . $theProd->get_id() . '">Add to the cart</a>', 'prodID' => $prodID];
 	}
 
 	public function addMemberDiscounts($order, $userEmail)
@@ -159,14 +166,38 @@ class RAFMembersController
 					'userEmail' => $userEmail
 				];
 
-				$discountType = count($totalRefered) > 1 && count($totalRefered) == 5 ? 20 : (
-					count($totalRefered) > 5 && count($totalRefered) == 10 ? 'freeProd-1' : (
-						count($totalRefered) > 10 && count($totalRefered) == 25 ? 'freeProd-2' : 10
-					)
-				);
+				$allDiscounts = RAFSettingsModel::init()->getDiscountsData();
+
+	
+
+				foreach ($allDiscounts as $totalReferdCount => $discount) :
+					if (isset($discount['discount'])) :
+
+						$discountType = count($totalRefered) == $totalReferdCount ? $discount['discount'] : null;
+
+					elseif (!isset($discount['discount'])) :
+						$prodID = array_values($discount);
+
+						$discountType = count($totalRefered) == $totalReferdCount ? ['discountKey' => key($discount), 'totalRefered' => $totalReferdCount, 'prodID' => $prodID[0]] : $discountType;
+
+					endif;
+				endforeach;
+
+			
+
+				// $discountType = count($totalRefered) > 1 && count($totalRefered) == 5 ? 20 : (
+				// 	count($totalRefered) > 5 && count($totalRefered) == 10 ? 'freeProd-1' : (
+				// 		count($totalRefered) > 10 && count($totalRefered) == 25 ? 'freeProd-2' : 10
+				// 	)
+				// );
 
 				/** Only create discount if it doesn't exists already. */
-				if (!isset($discounts[$discountType])) :
+				if (is_array($discountType) && !isset($discounts[$discountType['discountKey']])) :
+					$discounts[$discountType['discountKey']] = [
+						'isUsed' => 'no',
+						'prodID' => $discountType['prodID']
+					];
+				elseif (!isset($discounts[$discountType])) :
 					$discounts[$discountType] = [
 						'isUsed' => 'no',
 					];

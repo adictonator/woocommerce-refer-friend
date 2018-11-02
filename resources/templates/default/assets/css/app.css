@@ -15,11 +15,12 @@
 	background: url(../images/curalife-pic.jpg) no-repeat;
 	background-size: cover;
 	text-align: center;
+	justify-content: center;
 }
 
 .banner-sec .banner-left span:first-of-type {
 	position: relative;
-	top: 4em;
+	/* top: 4em; */
 	left: -15px;
 	font-size: 65px;
 	line-height: 80px;
@@ -30,7 +31,7 @@
 }
 .banner-sec .banner-left span:nth-of-type(2) {
 	position: relative;
-	top: 4.5em;
+	/* top: 4.5em; */
 	font-size: 65px;
 	line-height: 85px;
 	font-family: 'Lato', sans-serif;
@@ -95,7 +96,7 @@
 .banner-sec .facebook {
 	background: #4867aa;
 }
-.banner-sec .twiiter {
+.banner-sec .twitter {
 	background: #00aced;
 }
 
@@ -185,7 +186,8 @@
 	cursor: copy;
 }
 
-.banner-sec .share-the-link aside button {
+.banner-sec .share-the-link aside button,
+.raf-button--green {
 	background: #2dbe60;
 	color: #fff;
 	line-height: 1;
