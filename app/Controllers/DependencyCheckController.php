@@ -7,26 +7,27 @@ class DependencyCheckController
 {
 	public function __construct()
 	{
-		self::wooCommerceCheck();
+		$this->wooCommerceCheck();
 	}
 
-	private static function wooCommerceCheck()
+	private function wooCommerceCheck()
 	{
 		if (!class_exists('WooCommerce')) {
-			add_action('admin_notices', [__CLASS__, 'noWooCommerceNotice']);
+			add_action('admin_notices', [$this, 'noWooCommerceNotice']);
 		}
 	}
 
-	public static function noWooCommerceNotice()
+	public function noWooCommerceNotice()
 	{
-		self::resolveNoticeViewPath('dependency', 'woocommerce');
+		// $this->resolveViewPath('asdasd');
+		// self::resolveNoticeViewPath('dependency', 'woocommerce');
 
 		/** Do not proceed with WooCommerce is not activated. */
-		deactivate_plugins(RAF_ROOT);	
+		// deactivate_plugins(RAF_ROOT);	
 	}
 
-	private static function resolveNoticeViewPath($folder = 'dependency', $template = 'woocommerce')
-	{
-		require_once RAF_RESOURCES_DIR . "/notices/{$folder}/{$template}" . VIEW_EXT;
-	}
+	// private static function resolveNoticeViewPath($folder = 'dependency', $template = 'woocommerce')
+	// {
+	// 	require_once RAF_RESOURCES_DIR . "/notices/{$folder}/{$template}" . VIEW_EXT;
+	// }
 }

@@ -1,7 +1,7 @@
 <?php
 namespace RAF\Controllers;
 
-use RAF\Controllers\Menus\DashboardMenusController;
+use RAF\Controllers\Menus\AdminMenusController;
 
 defined('ABSPATH') or die('Not permitted!');
 
@@ -21,10 +21,9 @@ class Controller
 		self::plugRAFCart();
     }
 
-    private static function plugMenus()
+    public static function plugMenus()
     {
-        $menus = new DashboardMenusController;
-        $menus->initMenus();
+		new AdminMenusController;
 	}
 	
 	private static function plugRoutesListen()

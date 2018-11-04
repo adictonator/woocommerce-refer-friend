@@ -1,46 +1,22 @@
 <?php
 namespace RAF\Controllers\Menus;
 
-use HelperPlug;
-
 defined('ABSPATH') or die('Not permitted!');
 
 /**
- *
+ * Menu class for WP Admin Dashboard.
+ * 
  */
-class RAFMenuController implements MenuInterface
+class RAFMenuController extends BaseMenuController
 {
-    protected $title = HelperPlug::PLUGIN_LONG_NAME;
-    protected $slug = HelperPlug::PLUGIN_SLUG;
+    protected $title = '';
 
-    protected $cssAssets = [
-    ];
+    protected $cssAssets = [];
 
-    protected $jsAssets = [
-        //'app.js'
-    ];
+    protected $jsAssets = [];
 
-    public function menu()
-    {
-        add_menu_page('', $this->title, 'administrator', $this->slug, [$this, 'menuFunction']);
-    }
-
-    public function menuFunction()
-    {
-		/**	Prevent main menu to have its own view */
-        //$this->menuView($this->slug);
-    }
-
-    public function menuView($slug)
-    {
-        MenuViewGeneratorController::setView($slug)->getAssets($this->menuAssets());
-    }
-
-    public function menuAssets()
-    {
-        return [
-            'css' => $this->cssAssets,
-            'js' => $this->jsAssets
-        ];
-    }
+	public function __construct()
+	{
+		parent::__construct(['css' => $this->cssAssets, 'js' => $this->jsAssets], 'main');
+	}
 }

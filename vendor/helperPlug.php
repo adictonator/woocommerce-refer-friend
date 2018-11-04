@@ -9,7 +9,8 @@ defined('ABSPATH') or die('Not permitted!');
 
  /** Global variable to hold current user. */
 
-abstract class HelperPlug {
+abstract class HelperPlug
+{
 	const PLUGIN_LONG_NAME = 'Refer a Friend';
 	const PLUGIN_SHORT_NAME = 'RAF';
 	const PLUGIN_SLUG = 'wc-raf';
@@ -19,7 +20,8 @@ abstract class HelperPlug {
 	 * Not sure if it should be here at all.
 	 * 
 	 */
-	public static function getPostData($postType = 'post') {
+	public static function getPostData($postType = 'post')
+	{
 		$allPages = new WP_Query([
 			'post_type' => $postType,
 			'post_status' => 'publish'

@@ -1,42 +1,22 @@
 <?php
 namespace RAF\Controllers\Menus;
 
-use HelperPlug;
-
 defined('ABSPATH') or die('Not permitted!');
 
-class RAFEmailTemplatesMenuController implements MenuInterface {
-    public $title = 'Email Templates';
-    public $slug = HelperPlug::PLUGIN_SLUG . '-email-tps';
+/**
+ * Submenu class for WP Admin Dashboard.
+ * 
+ */
+class RAFEmailTemplatesMenuController extends BaseMenuController
+{
+    protected $title = 'Email Templates';
+	
+    protected $cssAssets = [];
 
-    protected $cssAssets = [
-    ];
+    protected $jsAssets = [];
 
-    protected $jsAssets = [
-        //'app.js'
-    ];
-
-    public function menu()
-    {
-        add_submenu_page(HelperPlug::PLUGIN_SLUG, HelperPlug::PLUGIN_PAGE_TITLE . $this->title, $this->title, 'administrator', $this->slug, [$this, 'menuFunction']);
-    }
-
-    public function menuFunction()
-    {
-        $this->menuView($this);
-    }
-
-    public function menuView($slug)
-    {
-        MenuViewGeneratorController::setView($slug)->getAssets($this->menuAssets());
-    }
-
-    public function menuAssets()
-    {
-        return [
-            'css' => $this->cssAssets,
-            'js' => $this->jsAssets
-        ];
-    }
-
+	public function __construct()
+	{
+		parent::__construct(['css' => $this->cssAssets, 'js' => $this->jsAssets]);
+	}
 }
