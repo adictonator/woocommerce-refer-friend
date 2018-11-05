@@ -11,17 +11,19 @@ defined('ABSPATH') or die('Not permitted!');
  */
 class RAFMembersMenuController extends BaseMenuController
 {
-    protected $title = 'Members';
+    public $title = 'Members';
 
     protected $cssAssets = [];
 
 	protected $jsAssets = [];
-	
-	public $controller;
-	
+
 	public function __construct()
 	{
-		$this->controller = new RAFMembersController;
 		parent::__construct(['css' => $this->cssAssets, 'js' => $this->jsAssets], 'sub', true);
+	}
+
+	protected function controller()
+	{
+		$this->setController(new RAFMembersController);
 	}
 }

@@ -9,7 +9,7 @@ defined('ABSPATH') or die('Not permitted!');
  */
 class RAFMenuController extends BaseMenuController
 {
-    protected $title = '';
+    public $title = '';
 
     protected $cssAssets = [];
 

@@ -3,19 +3,8 @@ namespace RAF\Models;
 
 defined('ABSPATH') or die('Not permitted!');
 
-class RAFMembersModel 
+class RAFMembersModel extends BaseModel
 {
-	private $dbDriver = null;
-	private $table;
-
-	public function __construct()
-	{
-		global $wpdb;
-
-		$this->dbDriver = $wpdb;
-		$this->table = $this->dbDriver->prefix . 'raf_members';
-	}
-
 	public function getAllMembers()
 	{
 		return $this->dbDriver->get_results(

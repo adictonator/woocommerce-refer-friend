@@ -2,6 +2,7 @@
 namespace RAF\Controllers\Menus;
 
 use HelperPlug;
+use RAF\Controllers\BaseController;
 use RAF\Traits\MenuHelperTrait;
 
 defined('ABSPATH') or die('Not permitted!');
@@ -24,6 +25,8 @@ abstract class BaseMenuController
 	 * @var string
 	 */
 	protected $accessLevel = 'administrator';
+
+	public $controller;
 		
 	/**
 	 * Slug for the menu/submenu.
@@ -71,11 +74,14 @@ abstract class BaseMenuController
 	{
 		$this->menuType = $menuType;
 		$this->useMainMenu = $useMainMenu;
-		$this->slug = $this->menuType == 'main' ? $this->slug : (
-			$this->useMainMenu ? $this->slug : $this->menuSlug($this->title)
-		);
+		// $this->slug = $this->menuType == 'main' ? $this->slug : (
+		// 	$this->useMainMenu ? $this->slug : $this->menuSlug($this->title)
+		// );
+		$this->slug = $this->menuType == 'main' ? $this->slug : $this->menuSlug($this->title);
 		$this->cssAssets = $assets['css'];
 		$this->jsAssets = $assets['js'];
+
+		method_exists($this, 'controller') ? $this->controller() : '';
 	}
 
 	/**
@@ -133,6 +139,11 @@ abstract class BaseMenuController
 			$this->slug,
 			[$this, 'menuFunction']
 		);
+	}
+
+	protected function setController(BaseController $controller)
+	{
+		$this->controller = $controller;
 	}
 
 	/**

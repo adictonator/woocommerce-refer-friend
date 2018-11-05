@@ -7,13 +7,11 @@ use RAF\Models\RAFReferedUsersModel;
 
 defined('ABSPATH') or die('Not permitted!');
 
-class RAFMembersController
+class RAFMembersController extends BaseController
 {
-	private $model = null;
-
-	public function __construct(RAFMembersModel $membersModel)
+	public function __construct()
 	{
-		$this->model = $membersModel;
+		parent::__construct(new RAFMembersModel);
 	}
 
 	public function getAllMembers()
