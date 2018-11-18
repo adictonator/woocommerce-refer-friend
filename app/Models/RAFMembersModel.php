@@ -5,6 +5,12 @@ defined('ABSPATH') or die('Not permitted!');
 
 class RAFMembersModel extends BaseModel
 {
+	protected $table = 'raf_members';
+	
+	public function create()
+	{
+		# code...
+	}
 	public function getAllMembers()
 	{
 		return $this->dbDriver->get_results(

@@ -8,7 +8,7 @@ defined('ABSPATH') or die('Not permitted!');
 /**
  * NEED REWORKING -- every function
  */
-class TemplateViewController
+class TemplateViewController extends BaseController
 {
 	private $pageIDs;
 	private $templateName = 'default';
@@ -16,7 +16,8 @@ class TemplateViewController
 
 	public function __construct()
 	{
-		$this->pageIDs = RAFSettingsModel::init()->getTemplatesData();	
+		parent::__construct(new RAFSettingsModel);
+		$this->pageIDs = $this->model->getTemplatesData();	
 
 		add_filter('page_template', [$this, 'setTemplatePage']);	
 		add_filter('display_post_states', [$this, 'setTemplatePageState'], 10, 2);	

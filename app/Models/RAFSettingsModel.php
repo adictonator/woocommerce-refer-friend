@@ -3,36 +3,49 @@ namespace RAF\Models;
 
 defined('ABSPATH') or die('Not permitted!');
 	
-class RAFSettingsModel
+class RAFSettingsModel extends BaseModel
 {
-	private static $dbDriver = null;
-	private static $table;
+	protected $table = 'raf_settings';
 
-	public function __construct()
+	protected function insert($settingsData)
 	{
-		global $wpdb;
-
-		self::$dbDriver = $wpdb;
-		self::$table = self::$dbDriver->prefix . 'raf_settings';
+		$this->dbDriver->insert($this->table, $settingsData);
 	}
 
-	public static function init()
+	protected function get($id)
 	{
-		return new RAFSettingsModel;
+		return $this->dbDriver->get_row("SELECT * FROM {$this->table}");
 	}
 
-	public static function processSettingsData($settingsData)
+	protected function update($id, $settingsData)
 	{
-		if (!self::getSettingsData()) :
-			self::insertSettingsData($settingsData);
+		$hasData = $this->get($id);
+		
+		if (null !== $hasData) :
+			$this->dbDriver->update($this->table,
+				$settingsData,
+				['id' => $id]
+			);
+		endif;
+	}
+
+	public function delete($id)
+	{
+		//
+	}
+
+	public function processSettingsData($settingsData)
+	{
+		if (!$this->getSettingsData()) :
+			$this->insertSettingsData($settingsData);
 		else:
-			self::updateSettingsData($settingsData);
+			$this->updateSettingsData($settingsData);
 		endif;
 
-		if (self::$dbDriver->last_error) :
+		if ($this->dbDriver->last_error) :
 			$_SESSION['raf']->adminFlash = (object) [
 				'type' => 'error',
-				'msg' => 'Error: ' . self::$dbDriver->last_error,
+				'msg' => 'Error: ' . $this->dbDriver->last_error,
 			];
 		else:
 			$_SESSION['raf']->adminFlash = (object) [
@@ -45,45 +58,28 @@ class RAFSettingsModel
 		exit;
 	}
 
-	protected function insertSettingsData($settingsData)
+	public function getSettingsData()
 	{
-		self::$dbDriver->insert(self::$table, $settingsData);
-	}
-	
-	protected static function updateSettingsData($settingsData)
-	{
-		$hasData = self::getSettingsData();
 		
-		if (null !== $hasData) :
-			self::$dbDriver->update(self::$table,
-				$settingsData,
-				['id' => $hasData->id]
-			);
-		endif;
 	}
 
-	public static function getSettingsData()
+	public function getTemplatesData()
 	{
-		return self::$dbDriver->get_row("SELECT * FROM ". self::$table);
-	}
-
-	public static function getTemplatesData()
-	{
-		$settingsData = self::getSettingsData();
+		$settingsData = $this->getSettingsData();
 
 		return !empty($settingsData->templatePageIDs) ? unserialize($settingsData->templatePageIDs) : [];
 	}
 
-	public static function getProductsData()
+	public function getProductsData()
 	{
-		$settingsData = self::getSettingsData();
+		$settingsData = $this->getSettingsData();
 
 		return !empty($settingsData->products) ? unserialize($settingsData->products) : [];
 	}
 	
-	public static function getDiscountsData()
+	public function getDiscountsData()
 	{
-		$settingsData = self::getSettingsData();
+		$settingsData = $this->getSettingsData();
 
 		return !empty($settingsData->discounts) ? unserialize($settingsData->discounts) : [];
 	}

@@ -2,10 +2,6 @@
 
 // Members View 
 $controller = self::$menuInstance->controller;
-
-echo "<pre>";
-print_r(self::$menuInstance);
-echo "</pre>";
 ?>
 
 <div class="wrap">

@@ -22,8 +22,8 @@ class RAFMembersMenuController extends BaseMenuController
 		parent::__construct(['css' => $this->cssAssets, 'js' => $this->jsAssets], 'sub', true);
 	}
 
-	protected function controller()
-	{
-		$this->setController(new RAFMembersController);
-	}
+	// protected function controller()
+	// {
+	// 	$this->setController(new RAFMembersController);
+	// }
 }

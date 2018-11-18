@@ -1,6 +1,8 @@
 <?php
 namespace RAF\Controllers\Menus;
 
+use RAF\Controllers\RAFMembersController;
+
 defined('ABSPATH') or die('Not permitted!');
 
 /**
@@ -18,5 +20,10 @@ class RAFMenuController extends BaseMenuController
 	public function __construct()
 	{
 		parent::__construct(['css' => $this->cssAssets, 'js' => $this->jsAssets], 'main');
+	}
+
+	protected function controller()
+	{
+		$this->setController(new RAFMembersController);
 	}
 }

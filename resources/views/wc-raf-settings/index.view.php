@@ -1,12 +1,12 @@
 <?php
 
-use RAF\Models\RAFSettingsModel;
-
 defined('ABSPATH') or die('Not permitted!');
 
-$selectedPages = RAFSettingsModel::getTemplatesData();
-$selectedProducts = RAFSettingsModel::getProductsData();
-$discounts = RAFSettingsModel::getDiscountsData();
+$controller = self::$menuInstance->controller;
+
+$selectedPages = $controller->getTemplatesData();
+$selectedProducts = $controller->getProductsData();
+$discounts = $controller->getDiscountsData();
 
 ?>
 

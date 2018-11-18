@@ -26,6 +26,11 @@ abstract class BaseMenuController
 	 */
 	protected $accessLevel = 'administrator';
 
+	/**
+	 * Controller for the current class.
+	 *
+	 * @var BaseController
+	 */
 	public $controller;
 		
 	/**
@@ -74,14 +79,14 @@ abstract class BaseMenuController
 	{
 		$this->menuType = $menuType;
 		$this->useMainMenu = $useMainMenu;
-		// $this->slug = $this->menuType == 'main' ? $this->slug : (
-		// 	$this->useMainMenu ? $this->slug : $this->menuSlug($this->title)
-		// );
-		$this->slug = $this->menuType == 'main' ? $this->slug : $this->menuSlug($this->title);
+		$this->slug = $this->menuType == 'main' ? $this->slug : (
+			$this->useMainMenu ? $this->slug : $this->menuSlug($this->title)
+		);
+		// $this->slug = $this->menuType == 'main' ? $this->slug : $this->menuSlug($this->title);
 		$this->cssAssets = $assets['css'];
 		$this->jsAssets = $assets['js'];
 
-		method_exists($this, 'controller') ? $this->controller() : '';
+		method_exists($this, 'controller') ? $this->controller() : false;
 	}
 
 	/**
@@ -141,6 +146,12 @@ abstract class BaseMenuController
 		);
 	}
 
+	/**
+	 * Set the controller for current class.
+	 *
+	 * @param BaseController $controller
+	 * @return void
+	 */
 	protected function setController(BaseController $controller)
 	{
 		$this->controller = $controller;

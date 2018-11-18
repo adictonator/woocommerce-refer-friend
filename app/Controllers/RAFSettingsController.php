@@ -8,11 +8,26 @@ defined('ABSPATH') or die('Not permitted!');
 /**
  * NEED REWORKING -- not sure if its a best approach
  */
-class RAFSettingsController implements RAFControllerInterface
+class RAFSettingsController extends BaseController
 {
-	public function __construct(array $data)
+	public function __construct()
 	{
-		$this->processData($data);
+		parent::__construct(new RAFSettingsModel);
+	}
+
+	public function getTemplatesData()
+	{
+		return $this->model->getTemplatesData();
+	}
+
+	public function getProductsData()
+	{
+		return $this->model->getProductsData();
+	}
+
+	public function getDiscountsData()
+	{
+		return $this->model->getDiscountsData();
 	}
 
 	public function processData(array $data)
