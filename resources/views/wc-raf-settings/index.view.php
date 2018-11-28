@@ -2,8 +2,10 @@
 
 defined('ABSPATH') or die('Not permitted!');
 
+echo "<pre>";
+print_r($lol);
+echo "</pre>";
 $controller = self::$menuInstance->controller;
-
 $selectedPages = $controller->getTemplatesData();
 $selectedProducts = $controller->getProductsData();
 $discounts = $controller->getDiscountsData();
@@ -18,7 +20,7 @@ $discounts = $controller->getDiscountsData();
 		<div class="notice notice-<?php echo $_SESSION['raf']->adminFlash->type; ?> is-dismissible">
 			<p><?php echo $_SESSION['raf']->adminFlash->msg; ?></p>
 		</div>
-	<?php 
+	<?php
 		unset($_SESSION['raf']->adminFlash);
 	endif; ?>
 
@@ -43,7 +45,7 @@ $discounts = $controller->getDiscountsData();
 										<select name="rafTemplateIDs[default]" id="raf_template_id" class="wp-raf-input ">
 											<option value="">Select a page</option>
 
-											<?php foreach (HelperPlug::getPostData('page') as $ID => $pageTitle) : ?>
+											<?php foreach (RAFFunctions::getPostData('page') as $ID => $pageTitle) : ?>
 												<option value="<?php echo $ID; ?>" <?php echo array_key_exists($ID, $selectedPages) ? 'selected' : ''; ?>><?php echo $pageTitle; ?></option>
 											<?php endforeach; ?>
 
@@ -69,7 +71,7 @@ $discounts = $controller->getDiscountsData();
 										<select name="rafProducts[]" id="raf_products" class="wp-raf-input" multiple>
 											<option value="">Select a product</option>
 
-											<?php foreach (HelperPlug::getPostData('product') as $ID => $productTitle) : ?>
+											<?php foreach (RAFFunctions::getPostData('product') as $ID => $productTitle) : ?>
 												<option value="<?php echo $ID; ?>" <?php echo in_array($ID, $selectedProducts) ? 'selected' : ''; ?>><?php echo $productTitle; ?></option>
 											<?php endforeach; ?>
 										</select>
@@ -94,8 +96,8 @@ $discounts = $controller->getDiscountsData();
 									<td>
 										<ul data-raf-disc-wrap>
 											<?php if (!empty($discounts)) :
-												$count = 0;										
-												foreach ($discounts as $totalReferal => $discountAmount) : ?> 
+												$count = 0;
+												foreach ($discounts as $totalReferal => $discountAmount) : ?>
 
 												<li <?php echo $count == 0 ? 'data-raf-disc-init' : ''; ?>>
 													<div>
@@ -115,7 +117,7 @@ $discounts = $controller->getDiscountsData();
 														<select name="freeProd[]">
 															<option value="">Select a product</option>
 
-															<?php foreach (HelperPlug::getPostData('product') as $ID => $productTitle) : ?>
+															<?php foreach (RAFFunctions::getPostData('product') as $ID => $productTitle) : ?>
 																<option value="<?php echo $ID; ?>" <?php echo isset($discountAmount['freeProd-' . $ID]) ? 'selected' : ''; ?>><?php echo $productTitle; ?></option>
 															<?php endforeach; ?>
 														</select>
@@ -127,12 +129,12 @@ $discounts = $controller->getDiscountsData();
 													<?php endif; ?>
 												</li>
 
-												<?php 
-												$count++;	
+												<?php
+												$count++;
 											endforeach;
 
 											else : ?>
-											
+
 											<li data-raf-disc-init>
 												<div>
 													<span>Set free product</span>
@@ -150,16 +152,16 @@ $discounts = $controller->getDiscountsData();
 													<select name="freeProd[]">
 														<option value="">Select a product</option>
 
-														<?php foreach (HelperPlug::getPostData('product') as $ID => $productTitle) : ?>
+														<?php foreach (RAFFunctions::getPostData('product') as $ID => $productTitle) : ?>
 															<option value="<?php echo $ID; ?>"><?php echo $productTitle; ?></option>
 														<?php endforeach; ?>
 													</select>
 												</div>
 												<button data-raf-disc="add" type="button" class="button-primary">Add +</button>
 											</li>
-										
+
 											<?php endif; ?>
-										
+
 										</ul>
 									</td>
 								</tr>
@@ -174,7 +176,7 @@ $discounts = $controller->getDiscountsData();
 				<td><button type="submit" class="button-primary">Save Settings</button></td>
 				</tr>
 			</tfoot>
-			
+
 		</table>
 	</form>
 </div>

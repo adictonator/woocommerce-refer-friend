@@ -3,9 +3,9 @@
 /**
  * Plugin Name: WooCommerce Refer a Friend
  * Description: The one and only refer a friend extension for WooCommerce!
- * Version: 2.0
- * Author: Sagmetic Infotec Pvt. Ltd.
- * Author URI: https://sagmetic.com
+ * Version: 1.0
+ * Author: Adictonator
+ * Author URI: https://twitter.com/adictonator
  * License: MIT
  */
 

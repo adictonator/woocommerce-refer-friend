@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 use RAF\Controllers\RAFUserAuthCheck;
 
@@ -19,7 +19,7 @@ get_header(); ?>
 			<?php if (false === RAFUserAuthCheck::check()): ?>
 
 				<div class="share-the-link">
-					<p>You need to login first in order to use <?php echo HelperPlug::PLUGIN_LONG_NAME; ?>! <br />
+					<p>You need to login first in order to use <?php echo RAFConstants::PLUGIN_LONG_NAME; ?>! <br />
 						<a href="<?php echo get_permalink(wc_get_page_id('myaccount')); ?>">Login to my account</a>
 					</p>
 				</div>
@@ -60,7 +60,7 @@ get_header(); ?>
 					<span class="raf-tooltip">Link copied!</span>
 					</aside>
 				</div>
-			
+
 			<?php endif; ?>
 		</div>
 	</section>

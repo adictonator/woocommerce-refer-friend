@@ -18,14 +18,24 @@ class Controller
 		self::plugTemplateViewController();
 		add_action('init', [__CLASS__, 'plugMemberAuthCheck']);
 		add_action('init', [__CLASS__, 'checkRAFAffURL']);
+		add_action( 'admin_init', [__CLASS__, 'admin_redirects']);
 		self::plugRAFCart();
-    }
+	}
+
+	public static function admin_redirects()
+	{
+		if (isset($_GET['raf-setup'])) :
+			ob_start();
+			echo 'lmao';
+			exit;
+		endif;
+	}
 
     public static function plugMenus()
     {
 		new AdminMenusController;
 	}
-	
+
 	private static function plugRoutesListen()
 	{
 		$routes = new RAFRoutesController;
@@ -56,7 +66,7 @@ class Controller
 	{
 		return RAFReferController::checkRAFAffURL();
 	}
-	
+
 	public static function plugRAFCart()
 	{
 		return new RAFCartController;

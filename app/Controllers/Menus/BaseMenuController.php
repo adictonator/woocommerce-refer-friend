@@ -1,7 +1,7 @@
 <?php
 namespace RAF\Controllers\Menus;
 
-use HelperPlug;
+use RAF\Helpers\RAFConstants;
 use RAF\Controllers\BaseController;
 use RAF\Traits\MenuHelperTrait;
 
@@ -9,7 +9,7 @@ defined('ABSPATH') or die('Not permitted!');
 
 /**
  * Base functions for WP Admin Dashboard Menu.
- * 
+ *
  * @package RAF
  * @author Adictonator <adityabhaskarsharma@gmail.com>
  * @since 1.0
@@ -29,16 +29,16 @@ abstract class BaseMenuController
 	/**
 	 * Controller for the current class.
 	 *
-	 * @var BaseController
+	 * @var object BaseController
 	 */
 	public $controller;
-		
+
 	/**
 	 * Slug for the menu/submenu.
 	 *
 	 * @var string
 	 */
-	public $slug = HelperPlug::PLUGIN_SLUG;
+	public $slug = RAFConstants::PLUGIN_SLUG;
 
 	/**
 	 * Type of menu. Can be "main" or "sub".
@@ -60,7 +60,7 @@ abstract class BaseMenuController
 	 * @var array
 	 */
 	protected $cssAssets = [];
-	
+
 	/**
 	 * JS assets array for menu/submenu.
 	 *
@@ -102,7 +102,7 @@ abstract class BaseMenuController
 
 	/**
 	 * Gathers menu related assets.
-	 * 
+	 *
 	 * @return void
 	 */
     protected function menuAssets()
@@ -112,7 +112,7 @@ abstract class BaseMenuController
             'js' => $this->jsAssets
         ];
 	}
-	
+
 	/**
 	 * Initializes WP menu page.
 	 *
@@ -122,10 +122,11 @@ abstract class BaseMenuController
 	{
 		add_menu_page(
 			'',
-			HelperPlug::PLUGIN_LONG_NAME,
+			RAFConstants::PLUGIN_LONG_NAME,
 			$this->accessLevel,
 			$this->slug,
-			[$this, 'menuFunction']
+			[$this, 'menuFunction'],
+			'none'
 		);
 	}
 
@@ -137,7 +138,7 @@ abstract class BaseMenuController
 	protected function subMenu()
 	{
 		add_submenu_page(
-			HelperPlug::PLUGIN_SLUG,
+			RAFConstants::PLUGIN_SLUG,
 			$this->menuTitle($this->title),
 			$this->title,
 			$this->accessLevel,

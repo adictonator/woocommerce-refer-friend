@@ -1,7 +1,7 @@
 <?php
 namespace RAF\Traits;
 
-use HelperPlug;
+use RAF\Helpers\RAFConstants;
 
 trait MenuHelperTrait
 {
@@ -12,11 +12,11 @@ trait MenuHelperTrait
 
 	public function menuSlug(string $string)
 	{
-		return HelperPlug::PLUGIN_SLUG . '-' . $this->prepareString($string);
+		return RAFConstants::PLUGIN_SLUG . '-' . $this->prepareString($string);
 	}
 
 	public function menuTitle(string $title)
 	{
-		return HelperPlug::PLUGIN_PAGE_TITLE . $title;
+		return RAFConstants::PLUGIN_PAGE_TITLE . $title;
 	}
 }

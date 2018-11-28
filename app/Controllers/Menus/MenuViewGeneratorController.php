@@ -1,6 +1,8 @@
 <?php
 namespace RAF\Controllers\Menus;
 
+use RAF\Helpers\RAFFunctions;
+
 defined('ABSPATH') or die('Not permitted!');
 
 /**
@@ -10,12 +12,13 @@ class MenuViewGeneratorController
 {
     protected static $menuInstance;
 
-    public static function setView($menuInstance)
+    public static function setView(object $menuInstance)
     {
 		self::$menuInstance = $menuInstance;
         self::view(self::$menuInstance->slug);
-
-        return new MenuViewGeneratorController;
+		$kkk = 'wow';
+		$lol = compact('kkk');
+        return new self;
     }
 
     protected static function view($slug)
@@ -36,9 +39,9 @@ class MenuViewGeneratorController
             if ($assetType == 'css') :
                 $assetPath = VIEWS_URL . '/' . self::$menuInstance->slug . '/assets/' . $assetType;
 			elseif ($assetType == 'js'):
-				$assetPath = VIEWS_URL . '/' . self::$menuInstance->slug . '/assets/' . $assetType;	
+				$assetPath = VIEWS_URL . '/' . self::$menuInstance->slug . '/assets/' . $assetType;
 			endif;
-				
+
 			$this->resolveAssetsPath($assetPath, $assetType, $assets);
         endforeach;
     }
